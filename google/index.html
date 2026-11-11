@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KS2igQpiVw+Bdk8NBv06w7iKCuTmu0gdv9nINAkxWso='">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ログインの続き</title>
+</head>
+<body>
+<p id="message">ログインの続きへ移動しています。</p>
+<noscript><p>続けるにはJavaScriptを有効にしてください。</p></noscript>
+<script>(function () {
+  var input = new URLSearchParams(location.search);
+  var state = input.get("state");
+  if (state === null || !/^[A-Za-z0-9._-]{1,512}$/.test(state)) {
+    document.getElementById("message").textContent = "このページは直接開けません。ログイン画面からやり直してください。";
+    return;
+  }
+  var output = new URLSearchParams();
+  ["code", "state", "error"].forEach(function (key) {
+    var value = input.get(key);
+    if (value !== null) output.set(key, value);
+  });
+  location.replace("https://script.google.com/a/~/macros/s/AKfycbzVAtDzf5uG2JDoLPpgh3H398_PleBUH9Z_OA2yrqpUwO5yULlHZdKYEvPBSVsjUQtKeQ/exec" + "?" + output.toString());
+})();</script>
+</body>
+</html>
